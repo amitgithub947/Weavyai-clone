@@ -20,10 +20,10 @@ A pixel-perfect clone of Weavy.ai workflow builder, focused exclusively on LLM (
 - **PostgreSQL** with Prisma ORM
 - **Clerk** for authentication
 - **React Flow** for visual workflow canvas
-- **Trigger.dev** for node execution (pending integration)
-- **Transloadit** for file uploads (pending integration)
-- **Google Gemini API** via Trigger.dev (pending integration)
-- **FFmpeg** via Trigger.dev for image/video processing (pending integration)
+- **Trigger.dev** for node execution 
+- **Transloadit** for file uploads
+- **Google Gemini API** via Trigger.dev 
+- **FFmpeg** via Trigger.dev for image/video processing 
 - **Tailwind CSS** for styling
 - **Zustand** for state management
 - **Zod** for schema validation
