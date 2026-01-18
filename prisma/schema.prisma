@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  clerkId   String     @unique
+  email     String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  workflows Workflow[]
+  runs      WorkflowRun[]
+}
+
+model Workflow {
+  id          String   @id @default(cuid())
+  name        String   @default("Untitled Workflow")
+  data        Json     // React Flow nodes and edges
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  runs        WorkflowRun[]
+}
+
+model WorkflowRun {
+  id          String   @id @default(cuid())
+  workflowId  String?
+  workflow    Workflow? @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  status      String   // "success" | "failed" | "partial" | "running"
+  scope       String   // "full" | "partial" | "single"
+  duration    Int?     // milliseconds
+  nodeIds     String[] // Array of node IDs that were executed
+  
+  createdAt   DateTime @default(now())
+  
+  nodeRuns    NodeRun[]
+}
+
+model NodeRun {
+  id          String   @id @default(cuid())
+  runId       String
+  run         WorkflowRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  
+  nodeId      String
+  nodeType    String
+  status      String   // "success" | "failed" | "running"
+  duration    Int?     // milliseconds
+  inputs      Json     // Input values used
+  outputs     Json?    // Output values generated
+  error       String?
+  
+  createdAt   DateTime @default(now())
+}
