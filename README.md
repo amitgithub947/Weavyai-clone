@@ -124,6 +124,10 @@ weavy-clone/
 - [ ] Add parallel execution for independent branches
 - [ ] Complete workflow history panel with real data
 
+## Output
+
+![Application Output](image.png)
+
 ## License
 
 MIT
